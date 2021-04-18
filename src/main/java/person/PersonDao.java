@@ -25,8 +25,8 @@ public interface PersonDao {
         email VARCHAR ,
         phone VARCHAR ,
         profession VARCHAR ,
-        married INTEGER(1), -- 0 is false, 1 is true
-        );
+        married INTEGER 
+        )
         """)
     void createPersonTable();
 
@@ -43,7 +43,7 @@ public interface PersonDao {
      * @param person
      */
     @SqlUpdate("""
-    INSERT INTO persontable VALUES (:id, :name, :birthDate, :gender, :email, :phone, :profession, :married);
+    INSERT INTO persontable VALUES (:id, :name, :birthDate, :gender, :email, :phone, :profession, :married)
     """)
     void insertPerson(@BindBean Person person);
 
@@ -54,17 +54,17 @@ public interface PersonDao {
      * @return {@code Optional<Person>}
      */
     @SqlQuery("""
-    SELECT * FROM persontable WHERE id = :id;
+    SELECT * FROM persontable WHERE id = :id
     """)
     Optional<Person> getPerson(@Bind("id") int id);
 
     @SqlUpdate("""
-    DELETE FROM persontable WHERE id = :id;
+    DELETE FROM persontable WHERE id = :id
     """)
     void deletePerson(@Bind("id") int id);
 
     @SqlQuery("""
-    SELECT * FROM persontable ORDER BY id;   
+    SELECT * FROM persontable ORDER BY id  
     """)
     List<Person> listPersons();
 
