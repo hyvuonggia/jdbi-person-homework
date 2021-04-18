@@ -13,9 +13,7 @@ import java.util.Optional;
 @RegisterBeanMapper(Person.class)
 public interface PersonDao {
 
-    /**
-     * Create the database table storing {@code Person} objects
-     */
+
     @SqlUpdate("""
     CREATE TABLE persontable (
         id INTEGER PRIMARY KEY,
@@ -38,21 +36,12 @@ public interface PersonDao {
 //                      @Bind("gender") String gender, @Bind("email") String email, @Bind("phone") String phone,
 //                      @Bind("profession") String profession, @Bind("married") boolean married) ;
 
-    /**
-     *
-     * @param person
-     */
+
     @SqlUpdate("""
     INSERT INTO persontable VALUES (:id, :name, :birthDate, :gender, :email, :phone, :profession, :married)
     """)
     void insertPerson(@BindBean Person person);
 
-    /**
-     * Get person with the id specified from the table
-     *
-     * @param id
-     * @return {@code Optional<Person>}
-     */
     @SqlQuery("""
     SELECT * FROM persontable WHERE id = :id
     """)

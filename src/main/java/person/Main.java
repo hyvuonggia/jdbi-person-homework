@@ -14,13 +14,17 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
         Jdbi jdbi = Jdbi.create("jdbc:h2:mem:test");
         jdbi.installPlugin(new SqlObjectPlugin());
 
         try (Handle handle = jdbi.open()) {
             PersonDao dao = handle.attach(PersonDao.class);
             dao.createPersonTable();
-            int n = new Scanner(System.in).nextInt();
+
+            System.out.print("Input number of persons you want to create: ");
+            int n = Integer.parseInt(scanner.nextLine());
             for (int i = 1; i <= n; i++) {
                 dao.insertPerson(createPerson(i));
 //                System.out.println(dao.getPerson(i).get());
@@ -34,14 +38,17 @@ public class Main {
             System.out.println();
 
 
-            dao.deletePerson(5);
+            System.out.print("Input the id of a person you want to delete: ");
+            dao.deletePerson(Integer.parseInt(scanner.nextLine()));
             List<Person> updatedPersonList = dao.listPersons();
             for (Person person : updatedPersonList) {
                 System.out.println(person);
             }
             System.out.println();
 
-            System.out.println(dao.getPerson(5).get());
+
+            System.out.print("Input the id of a person you want to find: ");
+            System.out.println(dao.getPerson(Integer.parseInt(scanner.nextLine())).get());
         }
     }
 
